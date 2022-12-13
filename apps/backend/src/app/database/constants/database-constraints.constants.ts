@@ -1,3 +1,3 @@
-export const DATABASET_TABLES = {
-  USERS: 'users',
+export const DATABASE_TABLES = {
+  USERS: 'Users',
 };

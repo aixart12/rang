@@ -1,1 +1,3 @@
-export const models = [];
+import { UserSchema } from '../models';
+
+export const models = [UserSchema];

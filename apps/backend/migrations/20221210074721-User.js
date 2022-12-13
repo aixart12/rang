@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize');
 const { QueryInterface } = require('sequelize');
 
-const TABLENAME = 'Users';
+const TABLE_NAME = 'Users';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.sequelize.transaction(async (transaction) => {
       await queryInterface.createTable(
-        TABLENAME,
+        TABLE_NAME,
         {
           id: {
             allowNull: false,
@@ -80,7 +80,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     return queryInterface.sequelize.transaction(async (transaction) => {
-      queryInterface.dropTable(TABLENAME, { transaction });
+      queryInterface.dropTable(TABLE_NAME, { transaction });
     });
   },
 };
