@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@rang/shared/common-models": ["libs/shared/common-models/src/index.ts"]
+      "@rang/shared/common-models": ["libs/shared/common-models/src/index.ts"],
+      "@rang/shared/common-reacto-models": [
+        "libs/shared/common-reacto-models/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
