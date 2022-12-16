@@ -37,15 +37,15 @@ export abstract class BaseService<T extends Model, K> {
       .then(this.plainEntityGetter);
   }
 
-  public async bulkDelete(
-    entitiesToDelete: number[] | string[],
-    transaction?: Transaction
-  ) {
-    return this.repository.destroy({
-      where: { id: entitiesToDelete },
-      transaction,
-    });
-  }
+  // public async bulkDelete(
+  //   entitiesToDelete: number[] | string[],
+  //   transaction?: Transaction
+  // ) {
+  //   return this.repository.destroy({
+  //     where: { id: entitiesToDelete },
+  //     transaction,
+  //   });
+  // }
 
   public async upsert(
     entity: Partial<K>,

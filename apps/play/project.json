@@ -57,7 +57,9 @@
         },
         "production": {
           "buildTarget": "play:build:production",
-          "hmr": false
+          "hmr": true,
+          "port": 4200,
+          "liveReload": true
         }
       }
     },
