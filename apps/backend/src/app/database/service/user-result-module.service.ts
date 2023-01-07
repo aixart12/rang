@@ -6,7 +6,7 @@ import { UserResultSchema, UserSchema } from '../models';
 import { BaseService } from './base.service';
 
 @Injectable()
-export class UserResultModuleService extends BaseService<
+export class UserResultModelService extends BaseService<
   UserResultSchema,
   UserResult
 > {

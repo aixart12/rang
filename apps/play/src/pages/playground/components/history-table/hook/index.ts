@@ -1,3 +1,4 @@
+import { Result } from '@rang/shared/common-models';
 import { useMemo } from 'react';
 import { Column, useTable } from 'react-table';
 
@@ -6,21 +7,29 @@ interface HistoryData {
   name: string;
 }
 
-export const historyTableHook = (data: HistoryData[]) => {
-  const columns = useMemo<Column<HistoryData>[]>(
+export const historyTableHook = (data: Result[]) => {
+  const columns = useMemo<Column<Result>[]>(
     () => [
       {
-        Header: 'Employee Id',
+        Header: 'Result Id',
         accessor: (rowItem) => rowItem.id,
       },
       {
-        Header: 'Name',
-        accessor: (rowItem) => rowItem?.name,
+        Header: 'Result Number',
+        accessor: (rowItem) => rowItem?.resultNumber,
+      },
+      {
+        Header: 'Result Color',
+        accessor: (rowItem) => rowItem?.resultColor,
+      },
+      {
+        Header: 'Time',
+        accessor: (rowItem) => rowItem?.createdAt,
       },
     ],
     []
   );
-  const tableInstance = useTable<HistoryData>({
+  const tableInstance = useTable<Result>({
     columns,
     data,
   });

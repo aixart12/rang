@@ -1,16 +1,23 @@
 import {
-  ConnectedSocket,
   MessageBody,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
 import * as moment from 'moment';
+import { Server } from 'socket.io';
+import * as _ from 'lodash';
+
+import { ResultService } from '../results/results.service';
+import {
+  OrderSelectColor,
+  OrderTypeConstants,
+} from '@rang/shared/common-react-models';
 
 @WebSocketGateway({ cors: true })
 export class TimerGateway {
+  constructor(private readonly resultService: ResultService) {}
+
   @WebSocketServer()
   server: Server;
 
@@ -33,17 +40,24 @@ export class TimerGateway {
   countTime() {
     let fixTime = 120000;
     const interval = 1000;
-    setInterval(() => {
+    setInterval(async () => {
       fixTime = fixTime - interval;
       let duration = moment.duration(fixTime, 'milliseconds');
-      // console.log(duration.minutes()+ 'm:' + duration.seconds() + 's')
       if (fixTime == 0) {
         fixTime = 120000;
       }
-      console.log({
-        minutes: duration.minutes(),
-        seconds: duration.seconds(),
-      });
+      let randomProperty = (obj: any) => {
+        var keys = _.keys(obj);
+        return obj[keys[(keys.length * Math.random()) << 0]];
+      };
+      if (duration.seconds() == 30) {
+        const result = await this.resultService.create({
+          type: OrderTypeConstants.TYPE_1,
+          resultColor: randomProperty(OrderSelectColor),
+          resultNumber: _.random(10),
+        });
+        this.server.sockets.emit('latest-result', result);
+      }
       return this.server.sockets.emit('timer', {
         minutes: duration.minutes(),
         seconds: duration.seconds(),

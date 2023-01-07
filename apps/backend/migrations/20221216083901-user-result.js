@@ -37,11 +37,27 @@ module.exports = {
             type: Sequelize.INTEGER,
             unique: 'user_and_result_composite_index',
             references: {
-              model: 'Areas',
+              model: 'Results',
               key: 'id',
             },
           },
+          userInput: {
+            allowNull: false,
+            type: Sequelize.STRING,
+          },
+          userInputValue: {
+            allowNull: false,
+            type: Sequelize.STRING,
+          },
+          outCome: {
+            type: Sequelize.BOOLEAN,
+          },
           createdAt: {
+            allowNull: false,
+            type: Sequelize.DATE,
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+          },
+          updatedAt: {
             allowNull: false,
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -54,7 +70,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     return queryInterface.sequelize.transaction(async (transaction) => {
-      queryInterface.dropTable(TABLE_NAME, { transaction });
+      queryInterface.dropAllTables(TABLE_NAME, { transaction });
     });
   },
 };

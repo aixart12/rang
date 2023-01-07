@@ -35,10 +35,6 @@ module.exports = {
             allowNull: false,
             type: Sequelize.STRING,
           },
-          email: {
-            allowNull: false,
-            type: Sequelize.STRING,
-          },
           phoneNumber: {
             allowNull: false,
             type: Sequelize.STRING,
@@ -80,7 +76,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     return queryInterface.sequelize.transaction(async (transaction) => {
-      queryInterface.dropTable(TABLE_NAME, { transaction });
+      queryInterface.dropAllTables(TABLE_NAME, { transaction });
     });
   },
 };

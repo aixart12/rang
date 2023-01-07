@@ -4,7 +4,6 @@ export interface User {
   middleName: string;
   lastName: string;
   fullName: string;
-  email: string;
   phoneNumber: string;
   password: string;
   isSuperAdmin: boolean;

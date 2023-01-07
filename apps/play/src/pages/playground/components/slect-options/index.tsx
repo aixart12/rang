@@ -5,20 +5,28 @@ import {
   useRadioGroup,
   VStack,
 } from '@chakra-ui/react';
-import { FC } from 'react';
 import * as _ from 'lodash';
+import { FC, useState } from 'react';
+import { boolean } from 'yup';
 
 import { RadioCard } from './radio-card';
-import { HistoryTable } from '../history-table';
+import { SelectModal } from './selectModel/selcet-model';
 
 export const SelectOptions: FC = () => {
   const options = ['react', 'vue', 'svelte'];
   const numberArray: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+  const [selected, setSelected] = useState('');
+  console.log('🚀 ~ file: index.tsx:19 ~ selected', selected);
+
+  const [toggle, setToggle] = useState<boolean>();
+
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'framework',
     defaultValue: 'react',
-    onChange: console.log,
+    onChange: (data) => {
+      setSelected(data), setToggle(true);
+    },
   });
   const group = getRootProps();
   return (
@@ -50,19 +58,14 @@ export const SelectOptions: FC = () => {
             })}
           </HStack>
         </VStack>
+        {toggle && (
+          <SelectModal
+            isOpen={toggle}
+            onClose={() => setToggle(false)}
+            selectedData={selected}
+          />
+        )}
       </Flex>
-      <HistoryTable data={data} />
     </>
   );
 };
-
-export const data = [
-  {
-    id: 1,
-    name: 'One',
-  },
-  {
-    id: 2,
-    name: 'Two',
-  },
-];

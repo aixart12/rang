@@ -43,6 +43,15 @@ export class UserResultSchema extends Model<UserResult> {
   })
   ResultId: number;
 
+  @Column
+  userInput: string;
+
+  @Column
+  userInputValue: string;
+
+  @Column
+  outCome: boolean;
+
   @Default(Sequelize.literal(POSTGRES_CURRENT_TIMESTAMP))
   @Column({ type: DataType.DATE })
   createdAt: string;

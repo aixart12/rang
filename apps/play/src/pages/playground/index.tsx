@@ -1,4 +1,3 @@
-import { FC, useEffect } from 'react';
 import {
   Flex,
   Tab,
@@ -7,16 +6,13 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
+import { FC } from 'react';
 import PageWrapper from '../../hoc/page-wrapper';
+import { HistoryTable } from './components/history-table';
 import { SelectOptions } from './components/slect-options';
-import { getTimer, TestEvent } from '../../apis/socketIo/timerSocketIo';
+import { Timer } from './components/timer';
 
 export const PlayGround: FC = () => {
-  useEffect(() => {
-    TestEvent();
-    console.log('🚀 ~ file: index.tsx:19 ~ useEffect ~ getTimer');
-    getTimer();
-  }, []);
   return (
     <PageWrapper>
       <Flex>
@@ -29,7 +25,9 @@ export const PlayGround: FC = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
+              <Timer />
               <SelectOptions />
+              <HistoryTable />
             </TabPanel>
             <TabPanel>
               <SelectOptions />

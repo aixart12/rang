@@ -32,9 +32,14 @@ module.exports = {
             type: Sequelize.STRING,
           },
           resultNumber: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
           },
           createdAt: {
+            allowNull: false,
+            type: Sequelize.DATE,
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+          },
+          updatedAt: {
             allowNull: false,
             type: Sequelize.DATE,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -42,6 +47,7 @@ module.exports = {
         },
         {
           initialAutoIncrement: INITIAL_ID,
+          transaction,
         }
       );
     });
@@ -49,7 +55,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     return queryInterface.sequelize.transaction(async (transaction) => {
-      queryInterface.dropTable(TABLE_NAME, { transaction });
+      queryInterface.dropAllTables(TABLE_NAME, { transaction });
     });
   },
 };

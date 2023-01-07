@@ -1,12 +1,9 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
-  IsEmail,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsPhoneNumber,
-  IsPositive,
   IsString,
 } from 'class-validator';
 
@@ -27,11 +24,6 @@ export class UsersDto {
   readonly lastName: string;
 
   @ApiProperty()
-  @IsEmail()
-  @IsNotEmpty()
-  readonly email: string;
-
-  @ApiProperty()
   @IsPhoneNumber()
   @IsNotEmpty()
   readonly phoneNumber: string;
@@ -40,11 +32,6 @@ export class UsersDto {
   @IsOptional()
   @IsBoolean()
   readonly isSuperAdmin: boolean;
-
-  @ApiProperty()
-  @IsNumber()
-  @IsPositive()
-  readonly employeeCode: number;
 
   @ApiProperty()
   @IsOptional()

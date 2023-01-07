@@ -8,6 +8,6 @@ import { UserService } from './user.service';
   imports: [DatabaseModule.forFeature([UserModelService])],
   controllers: [UserController],
   providers: [UserService],
-  exports: [],
+  exports: [UserService],
 })
 export class UserModule {}

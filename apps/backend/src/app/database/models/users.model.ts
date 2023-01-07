@@ -50,9 +50,6 @@ export class UserSchema extends Model<User> {
   })
   fullName: string;
 
-  @TextLengthColumn()
-  email: string;
-
   @Column({
     type: DataType.STRING(LENGTH_255),
   })

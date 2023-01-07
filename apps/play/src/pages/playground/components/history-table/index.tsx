@@ -1,21 +1,25 @@
 import { FC, useMemo } from 'react';
 import { historyTableHook } from './hook';
+import { useQuery, useMutation } from 'react-query';
 
 import { CustomTable } from 'libs/shared/common-react-models/src';
+import { Result } from '@rang/shared/common-models';
+import { result } from 'lodash';
+import { getAllResults } from 'apps/play/src/apis/result.apis';
+import { TimerHook } from '../../hook/timerHook';
 
-interface HistoryData {
-  id: number;
-  name: string;
-}
+export const HistoryTable: FC = () => {
+  const { data: tableData, refetch } = useQuery<Result[]>('getResult', () =>
+    getAllResults()
+  );
 
-interface HistoryTablePops {
-  data: HistoryData[];
-}
+  const getTime = TimerHook();
+  if (getTime?.minutes === 0 && getTime.seconds === 0) {
+    refetch();
+  }
+  const { headerGroups, rows, prepareRow } = historyTableHook(tableData || []);
 
-export const HistoryTable: FC<HistoryTablePops> = ({ data }) => {
-  const { headerGroups, rows, prepareRow } = historyTableHook(data || []);
-
-  const UserTable = useMemo(() => CustomTable<HistoryData>(), []);
+  const UserTable = useMemo(() => CustomTable<Result>(), []);
   return (
     <UserTable
       headerGroups={headerGroups}
