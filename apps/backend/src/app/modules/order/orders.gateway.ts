@@ -13,10 +13,15 @@ import {
   OrderSelectColor,
   OrderTypeConstants,
 } from '@rang/shared/common-react-models';
+import { OrderService } from './orders.service';
+import { BadGatewayException, BadRequestException } from '@nestjs/common';
 
 @WebSocketGateway({ cors: true })
 export class TimerGateway {
-  constructor(private readonly resultService: ResultService) {}
+  constructor(
+    private readonly resultService: ResultService,
+    private readonly orderService: OrderService
+  ) {}
 
   @WebSocketServer()
   server: Server;
@@ -51,11 +56,25 @@ export class TimerGateway {
         return obj[keys[(keys.length * Math.random()) << 0]];
       };
       if (duration.seconds() == 30) {
+        const resultNumber = _.random(10);
+        const resultColor = randomProperty(OrderSelectColor);
+
         const result = await this.resultService.create({
           type: OrderTypeConstants.TYPE_1,
-          resultColor: randomProperty(OrderSelectColor),
-          resultNumber: _.random(10),
+          resultColor: resultColor,
+          resultNumber: resultNumber,
         });
+
+        if (!result) {
+          throw new BadRequestException('Result has no outCome');
+        }
+
+        await this.orderService.checkUerInput(
+          result.id,
+          resultColor,
+          JSON.stringify(resultNumber)
+        );
+
         this.server.sockets.emit('latest-result', result);
       }
       return this.server.sockets.emit('timer', {

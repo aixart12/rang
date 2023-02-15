@@ -73,4 +73,17 @@ export class UserResultService {
       }
     );
   }
+
+  updateOutCome(id: number, outCome: boolean, transaction?: Transaction) {
+    return this.userResultModuleService.sequelize.transaction(
+      { transaction },
+      async (transaction) => {
+        return this.userResultModuleService.updateWhere(
+          { id },
+          { outCome: outCome },
+          transaction
+        );
+      }
+    );
+  }
 }
